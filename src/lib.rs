@@ -1,24 +1,48 @@
 #![no_std]
 #![feature(fmt_as_str)]
-#![allow(dead_code, unused_imports)]
+#![allow(dead_code, unused_imports, unused_variables)]
 // use core::ptr::null;
 // use core::lazy::Lazy;
-extern crate libc;
 extern crate alloc;
+use alloc::boxed::Box;
+
 
 use core::future::Future;
 // struct String;
 
-extern {
-    /// from libc crate
-    pub fn printf(format: *const u8, ...) -> i32;
+//
+// extern {
+//     /// from libc crate
+//     pub fn printf(format: *const u8, ...) -> i32;
+// }
+
+
+pub struct FileDescriptor {
+    fd: libc::c_int
+}
+
+impl FileDescriptor {
+    const STDIN: libc::c_int = 0i32;
+    const STDOUT: libc::c_int = 1i32;
+    const STDERR: libc::c_int = 2i32;
+
+    pub fn new_stdout() -> Self {
+        Self {
+            fd: Self::STDOUT
+        }
+    }
+
+    pub fn print_hello_world(&self) {
+        let hello_world = b"Hellow World!\n\0";
+        let hello_world_void_ptr = hello_world.as_ptr() as *const core::ffi::c_void;
+        unsafe {
+            libc::write(self.fd, hello_world_void_ptr, hello_world.len());
+        }
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use printf;
-    use alloc::boxed::Box;
-
     #[test]
     fn it_works() {
         let a = "1\n\0";
@@ -33,7 +57,22 @@ mod tests {
         unsafe {
             // libc::fork();
             // libc::printf();
-            printf(a_ptr);
+            libc::printf(a_ptr as *const libc::c_char);
         }
+    }
+
+    #[test]
+    fn test_libc_printf() {
+        let a = libc::STDOUT_FILENO;
+        let hello_world = b"Hellow World!\n\0";
+        unsafe {
+            libc::printf(hello_world.as_ptr() as *const libc::c_char);
+        }
+    }
+
+    #[test]
+    fn test_my_fd_and_stdout() {
+        let fd_stdout = super::FileDescriptor::new_stdout();
+        fd_stdout.print_hello_world();
     }
 }
