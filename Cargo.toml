@@ -1,4 +1,6 @@
 [package]
 name = "unsafe_redis_client_no_std_no_dependencies"
 version = "0.1.0"
-edition = "2018"
+
+[dependencies]
+libc = "*"
