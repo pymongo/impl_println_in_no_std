@@ -1,5 +1,4 @@
 #![no_std]
-extern crate alloc;
 use core::fmt::Write;
 
 pub struct StdoutWriter;
