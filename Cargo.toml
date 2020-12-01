@@ -1,6 +1,6 @@
 [package]
-name = "unsafe_redis_client_no_std_no_dependencies"
+name = "impl_println_in_no_std"
 version = "0.1.0"
 
 [dependencies]
-libc = "*"
+libc = { version = "*", default-features = false }
