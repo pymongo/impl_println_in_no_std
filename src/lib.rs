@@ -1,7 +1,13 @@
 #![no_std]
 use core::fmt::Write;
+// use core::ffi::c_void;
 
-pub struct StdoutWriter;
+// pub unsafe extern "C" fn write(
+//     fd: i32,
+//     ptr: *const cor,
+//     size: size_t
+// ) -> ssize_t
+// pub struct StdoutWriter;
 
 impl core::fmt::Write for StdoutWriter {
     fn write_str(&mut self, s: &str) -> core::fmt::Result {
