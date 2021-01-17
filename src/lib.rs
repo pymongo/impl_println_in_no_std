@@ -9,7 +9,6 @@ use core::fmt::Write;
 // ) -> ssize_t
 // pub struct StdoutWriter;
 
-
 impl core::fmt::Write for StdoutWriter {
     fn write_str(&mut self, s: &str) -> core::fmt::Result {
         const STDOUT_FD: libc::c_int = 1;
