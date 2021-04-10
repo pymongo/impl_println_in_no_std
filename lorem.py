@@ -1,6 +1,7 @@
 # Only support Linux
 import datetime
 import os
+import json
 
 
 def modify():
@@ -37,5 +38,10 @@ def daily_commit(start_date: datetime.date, end_date: datetime.date):
 
 
 if __name__ == '__main__':
-    daily_commit(datetime.date(2021, 3, 21), datetime.date(2021, 3, 21))
+    f = open('lorem_py_config.json')
+    config = json.load(f)
+    since = datetime.datetime.strptime(config["since"], '%Y-%m-%d')
+    until = datetime.datetime.strptime(config["until"], '%Y-%m-%d')
+    f.close()
+    daily_commit(since.date(), until.date())
 
