@@ -13,7 +13,7 @@ def modify():
 
 
 def commit():
-    os.system('git commit -a -m update_lorem > /dev/null 2>&1')
+    os.system('git commit -a -m update > /dev/null 2>&1')
 
 
 def set_sys_time(year: int, month: int, day: int):
